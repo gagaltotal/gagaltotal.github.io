@@ -1,82 +1,510 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="ghostgtr666" content="GhostGTR666 | Gagaltotal666 | GhostGTR666">
-  <title>GhostGTR666</title>
-  <link rel="icon" href="ghost.png">
-  <style>
-    body {background:#000000;color:#bf0101;}
-    a {color:#69f0ae;text-decoration:none}
-    .ascii {
-       font-family: Courier;
-       color: red;
-       font-size:8pt;
-       font-weight: bold;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="ghostgtr666" content="GhostGTR666 | Gagaltotal666 | GhostGTR666">
+    <title>GhostGTR666 - Gagaltotal666</title>
+    <link rel="icon" href="ghost.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.terminal@2.42.0/css/jquery.terminal.min.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
-    div {text-align: center;}
+
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    body {
+        background: #0a0a0a;
+    }
+
+    body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: repeating-linear-gradient(0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.08) 2px,
+                rgba(0, 0, 0, 0.08) 4px);
+        pointer-events: none;
+        z-index: 9999;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.6) 100%);
+        pointer-events: none;
+        z-index: 9998;
+    }
+
+    @keyframes flicker {
+        0% {
+            opacity: 0.97;
+        }
+
+        5% {
+            opacity: 0.95;
+        }
+
+        10% {
+            opacity: 0.98;
+        }
+
+        15% {
+            opacity: 0.96;
+        }
+
+        20% {
+            opacity: 0.99;
+        }
+
+        50% {
+            opacity: 0.97;
+        }
+
+        80% {
+            opacity: 0.98;
+        }
+
+        90% {
+            opacity: 0.95;
+        }
+
+        100% {
+            opacity: 0.98;
+        }
+    }
+
+    #terminal {
+        --size: 1.1;
+        font-family: 'Fira Code', monospace;
+        animation: flicker 4s infinite;
+        height: 100vh;
+        height: 100dvh;
+    }
+
+    .terminal {
+        --background: #0a0a0a;
+        --foreground: #bf0101;
+        --color: #bf0101;
+        --font: 'Fira Code', monospace;
+        background: #0a0a0a !important;
+        color: #bf0101 !important;
+        font-family: 'Fira Code', monospace !important;
+        padding: 10px !important;
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    .terminal .cmd {
+        background: #0a0a0a !important;
+        color: #bf0101 !important;
+        font-family: 'Fira Code', monospace !important;
+        font-size: inherit !important;
+    }
+
+    .terminal .cmd .cursor {
+        background: #bf0101 !important;
+        color: #0a0a0a !important;
+    }
+
+    .terminal .cmd .cursor.blink {
+        background: transparent !important;
+        color: #bf0101 !important;
+    }
+
+    .terminal .prompt {
+        color: #bf0101 !important;
+    }
+
+    .terminal .cmd-prompt {
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .terminal .cmd-line {
+        overflow-wrap: break-word;
+    }
+
+    .terminal div,
+    .terminal .terminal-output div {
+        overflow-wrap: break-word !important;
+        white-space: pre-wrap !important;
+    }
+
+    .terminal::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .terminal::-webkit-scrollbar-track {
+        background: #0a0a0a;
+    }
+
+    .terminal::-webkit-scrollbar-thumb {
+        background: #bf0101;
+        border-radius: 2px;
+    }
+
+    @media (max-width: 900px) {
+        .terminal {
+            font-size: 12px !important;
+            padding: 8px !important;
+        }
+
+        #terminal {
+            --size: 0.95;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .terminal {
+            font-size: 11px !important;
+            padding: 6px !important;
+            line-height: 1.35 !important;
+        }
+
+        #terminal {
+            --size: 0.9;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .terminal {
+            font-size: 9px !important;
+            padding: 4px !important;
+            line-height: 1.3 !important;
+        }
+
+        #terminal {
+            --size: 0.75;
+        }
+    }
+
+    @media (max-height: 400px) {
+        .terminal {
+            font-size: 10px !important;
+            padding: 4px !important;
+            line-height: 1.25 !important;
+        }
+
+        #terminal {
+            --size: 0.8;
+        }
+    }
+
+    @media (max-height: 500px) and (orientation: landscape) {
+        .terminal {
+            font-size: 9px !important;
+            padding: 4px 6px !important;
+        }
+
+        #terminal {
+            --size: 0.75;
+        }
+    }
+
+    /* ===== ASCII BANNER MOBILE AUTO COMPRESS ===== */
+    .ascii-banner{
+      display:inline-block;
+      white-space:pre;
+      transform-origin:top left;
+      will-change:transform;
+    }
+
+    @media (max-width:768px){
+      .ascii-banner{
+        line-height:1.05 !important;
+      }
+    }
     </style>
 </head>
-<body>
-  <pre>
 
-    ███╗   ███╗██████╗     ██████╗ ██╗  ██╗ ██████╗ ███████╗████████╗ ██████╗████████╗██████╗  ██████╗  ██████╗  ██████╗
-    ████╗ ████║██╔══██╗   ██╔════╝ ██║  ██║██╔═══██╗██╔════╝╚══██╔══╝██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██╔════╝ ██╔════╝
-    ██╔████╔██║██████╔╝   ██║  ███╗███████║██║   ██║███████╗   ██║   ██║  ███╗  ██║   ██████╔╝███████╗ ███████╗ ███████╗
-    ██║╚██╔╝██║██╔══██╗   ██║   ██║██╔══██║██║   ██║╚════██║   ██║   ██║   ██║  ██║   ██╔══██╗██╔═══██╗██╔═══██╗██╔═══██╗
-    ██║ ╚═╝ ██║██║  ██║██╗╚██████╔╝██║  ██║╚██████╔╝███████║   ██║   ╚██████╔╝  ██║   ██║  ██║╚██████╔╝╚██████╔╝╚██████╔╝
-    ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝  ╚═════╝  ╚═════╝
-  
-     <div class='ascii'>
-     __________________________________________________________________________
-     |                                                                         |
-     |                                                                         |
-     |                                                                         |
-     |                               .:odxxxo:.                                |
-     |                             ;WMMMMMMMMMMN,                              |
-     |                            .xMMMMMMMMMMMMc.                             |
-     |                            ;0MMMMMMMMMMMMd.                             |
-     |                           .coMMMMMMMMMMMM,..                            |
-     |                           .';MMMMMMMMMMMN,.                             |
-     |                          ...OMMMMMMMMMMMWo.                             |
-     |                            ,..,lkXWMKdc'.'c                             |
-     |                                  'dW,      .,                           |
-     |                          .''....'. 'kdkdllo:.                           |
-     |                               ...   .oo'                                |
-     |                                 :co:co'                                 |
-     |                                .ldlodo   .                              |
-     |                               . .,colc.                                 |
-     |                                  .lc,                                   |
-     |                                  .. .                                   |
-     |                                                                         |
-     |                                                                         |
-     --------------------------------------------------------------------------
-   </div>
-  <b><span style="color:#00e676">Ghost666@GhostGTR666</span><span style="color:#999999">:</span><span style="color:#039be5">~$</span></b> <span style="color:#999999">uname -a</span><small>
-  - <a href='https://gagaltotal666.my.id/'>My Name is Mr.GhostGTR666</a>
-  </small><b><span style="color:#00e676">Ghost666@GhostGTR666</span><span style="color:#999999">:</span><span style="color:#039be5">~$</span></b> <span style="color:#999999">Who is</span><small>
-  - <a href='https://gagaltotal666.my.id/'>1337 0day.today</a>
-  </small><b><span style="color:#00e676">Ghost666@GhostGTR666</span><span style="color:#999999">:</span><span style="color:#039be5">~$</span></b> <span style="color:#999999">echo My Portfolio</span><small>
-  - <a href='https://gagaltotal.github.io/ghost666'>My Portfolio</a>
- </small><b><span style="color:#00e676">Ghost666@GhostGTR666</span><span style="color:#999999">:</span><span style="color:#039be5">~$</span></b> <span style="color:#999999">bash ip.sh</span><small>
-  - Your IP Address : <a id="ip"></a>
- </small><b><span style="color:#00e676">Ghost666@GhostGTR666</span><span style="color:#999999">:</span><span style="color:#039be5">~$</span></b> <span style="color:#999999">Create By Mr.GhostGTR666</span>
- </pre>
-  
-  <script type="text/javascript">
-	function getIP() {
-	  fetch('https://api.ipify.org?format=json')
-	  .then(response => response.json())
-	  .then(data => {
-	    document.getElementById("ip").textContent = data.ip;
-	  })
-	  .catch(error => {
-	    console.error("Error:",error);
-	  });
-	}
-	getIP();
-  </script>
-  
+<body>
+
+    <div id="terminal"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.terminal@2.42.0/js/jquery.terminal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.terminal@2.42.0/js/unix_formatting.min.js"></script>
+    <script>
+    function responsiveBanner() {
+      let width=window.innerWidth;
+
+      let scale=1;
+
+      if(width<=360){
+        scale=.23;
+      } else if(width<=400){
+        scale=.27;
+      } else if(width<=480){
+        scale=.32;
+      } else if(width<=600){
+        scale=.40;
+      } else if(width<=768){
+        scale=.55;
+      }
+
+      return `<span class="ascii-banner" style="transform:scale(${scale})">`
+          + BANNER_FULL
+          + '</span>';
+    }
+
+    // ─── ASCII Art: Full (Desktop) & Mini (Mobile) ────────
+    const BANNER_FULL = String.raw `
+  ███╗   ███╗██████╗     ██████╗ ██╗  ██╗ ██████╗ ███████╗████████╗ ██████╗████████╗██████╗  ██████╗  ██████╗  ██████╗
+  ████╗ ████║██╔══██╗   ██╔════╝ ██║  ██║██╔═══██╗██╔════╝╚══██╔══╝██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██╔════╝ ██╔════╝
+  ██╔████╔██║██████╔╝   ██║  ███╗███████║██║   ██║███████╗   ██║   ██║  ███╗  ██║   ██████╔╝███████╗ ███████╗ ███████╗
+  ██║╚██╔╝██║██╔══██╗   ██║   ██║██╔══██║██║   ██║╚════██║   ██║   ██║   ██║  ██║   ██╔══██╗██╔═══██╗██╔═══██╗██╔═══██╗
+  ██║ ╚═╝ ██║██║  ██║██╗╚██████╔╝██║  ██║╚██████╔╝███████║   ██║   ╚██████╔╝  ██║   ██║  ██║╚██████╔╝╚██████╔╝╚██████╔╝
+  ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝  ╚═════╝  ╚═════╝ `;
+
+    const BANNER_MOBILE = BANNER_FULL;
+
+    const GHOST_FULL = String.raw `[[;#bf0101;]
+    _________________________________________________________________________
+   |                                                                         |
+   |                                                                         |
+   |                                                                         |
+   |                               .:odxxxo:.                                |
+   |                             ;WMMMMMMMMMMN,                              |
+   |                            .xMMMMMMMMMMMMc.                             |
+   |                            ;0MMMMMMMMMMMMd.                             |
+   |                           .coMMMMMMMMMMMM,..                            |
+   |                           .';MMMMMMMMMMMN,.                             |
+   |                          ...OMMMMMMMMMMMWo.                             |
+   |                            ,..,lkXWMKdc'.'c                             |
+   |                                  'dW,      .,                           |
+   |                          .''....'. 'kdkdllo:.                           |
+   |                               ...   .oo'                                |
+   |                                 :co:co'                                 |
+   |                                .ldlodo   .                              |
+   |                               . .,colc.                                 |
+   |                                  .lc,                                   |
+   |                                  .. .                                   |
+   |                                                                         |
+   |                                                                         |
+    -------------------------------------------------------------------------]`;
+
+    const GHOST_MOBILE = String.raw `[[;#bf0101;]
+    _____________________________________________
+   |                                             |
+   |                .:odxxxo:.                   |
+   |              ;WMMMMMMMMMMN,                 |
+   |             .xMMMMMMMMMMMMc.                |
+   |             ;0MMMMMMMMMMMMd.                |
+   |            .coMMMMMMMMMMMM,..               |
+   |            .';MMMMMMMMMMMN,.                |
+   |           ...OMMMMMMMMMMMWo.                |
+   |             ,..,lkXWMKdc'.'c                |
+   |                   'dW,      .,              |
+   |           .''....'. 'kdkdllo:.              |
+   |                ...   .oo'                   |
+   |                  :co:co'                    |
+   |                 .ldlodo   .                 |
+   |                . .,colc.                    |
+   |                   .lc,                      |
+   |                   .. .                      |
+    ---------------------------------------------]`;
+
+    const PROMPT = `[[;#00e676;]Ghostgtr666@GhostGTR666][[;#999999;]:][[;#039be5;]~$ ]`;
+
+    let userIP = 'Fetching...';
+
+    fetch('https://api.ipify.org?format=json')
+        .then(r => r.json())
+        .then(data => {
+            userIP = data.ip;
+        })
+        .catch(() => {
+            userIP = 'Unknown';
+        });
+
+    function isMobile() {
+        return window.innerWidth <= 600;
+    }
+
+    const term = $('#terminal').terminal({
+
+        help: function() {
+            this.echo([
+                '[[;#fdd835;]Available Commands:]',
+                '',
+                '  [[;#00e5ff;]help]        [[;#999999;]- Show this menu]',
+                '  [[;#00e5ff;]uname -a]    [[;#999999;]- System information]',
+                '  [[;#00e5ff;]whoami]      [[;#999999;]- Who is GhostGTR666]',
+                '  [[;#00e5ff;]echo]        [[;#999999;]- Print text]',
+                '  [[;#00e5ff;]cat ip.sh]   [[;#999999;]- Show your IP address]',
+                '  [[;#00e5ff;]portfolio]   [[;#999999;]- View portfolio links]',
+                '  [[;#00e5ff;]banner]      [[;#999999;]- Show banner again]',
+                '  [[;#00e5ff;]ghost]       [[;#999999;]- Show ghost ASCII art]',
+                '  [[;#00e5ff;]neofetch]    [[;#999999;]- System summary]',
+                '  [[;#00e5ff;]ls]          [[;#999999;]- List files]',
+                '  [[;#00e5ff;]date]        [[;#999999;]- Current date/time]',
+                '  [[;#00e5ff;]clear]       [[;#999999;]- Clear terminal]',
+                '  [[;#00e5ff;]socials]     [[;#999999;]- Social links]',
+                '  [[;#00e5ff;]mybini]      [[;#999999;]- My Bini]',
+            ].join('\n'));
+        },
+
+        uname: function() {
+            this.echo('GhostOS 6.6.6-ghostgtr666 #1 SMP PREEMPT x86_64 GNU/Linux');
+        },
+
+        whoami: function() {
+            this.echo([
+                '[[;#00e676;]Mr.GhostGTR666]',
+                '  [[;#999999;]]]─ [[;#69f0ae;]1337 0day.today]',
+                '  [[;#999999;]]]─ [[;#69f0ae;]https://www.gagaltotal666.my.id/]',
+            ].join('\n'));
+        },
+
+        echo: function(...args) {
+            this.echo(args.join(' '));
+        },
+
+        cat: function(file) {
+            if (!file) {
+                this.echo('[[;#bf0101;]cat: missing file operand]');
+                return;
+            }
+            if (file === 'ip.sh') {
+                this.echo(`[[;#999999;]Your IP Address: ]] [[;#69f0ae;]${userIP}]`);
+            } else if (file === 'readme.md') {
+                this.echo('[[;#fdd835;]# Welcome to home GhostGTR666 Terminal]');
+                this.echo('Type [[;#00e5ff;]help] to see available commands.');
+            } else if (file === 'about.txt') {
+                this.echo('[[;#bf0101;]Created by Mr.GhostGTR666 — 1337 0day.today]');
+            } else {
+                this.echo(`[[;#bf0101;]cat: ${file}: No such file or directory]`);
+            }
+        },
+
+        portfolio: function() {
+            this.echo([
+                '[[;#fdd835;]My Portfolio:]',
+                '',
+                '  [[;#999999;]]]─ [[;#69f0ae;]https://gagaltotal.github.io/ghost666]',
+                '  [[;#999999;]]]─ [[;#69f0ae;]https://gtrtech666.my.id/portofolio-saya/]',
+            ].join('\n'));
+        },
+
+        banner: function() {
+            this.echo(isMobile() ? responsiveBanner() : BANNER_FULL,{raw:true});
+        },
+
+        ghost: function() {
+            this.echo(isMobile() ? GHOST_MOBILE : GHOST_FULL);
+        },
+
+        neofetch: function() {
+            const now = new Date();
+            const lines = [
+                `[[;#00e676;]Ghostgtr666][[;#999999;]@][[;#00e676;]GhostGTR666]`,
+                `[[;#999999;]──────────────────]`,
+                `[[;#039be5;]OS]:       GhostOS 6.6.6`,
+                `[[;#039be5;]Kernel]:   6.6.6-ghostgtr666`,
+                `[[;#039be5;]Shell]:    ghostsh 1.0`,
+                `[[;#039be5;]Terminal]: GhostTerm`,
+                `[[;#039be5;]IP]:       ${userIP}`,
+                `[[;#039be5;]Uptime]:   ${Math.floor(performance.now()/1000)}s`,
+                `[[;#039be5;]Date]:     ${now.toLocaleString()}`,
+                '',
+                `[[;#bf0101;]▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀]`,
+            ];
+            this.echo(lines.join('\n'));
+        },
+
+        ls: function() {
+            this.echo(
+                '[[;#039be5;]ip.sh]    [[;#00e676;]readme.md]    [[;#fdd835;]about.txt]    [[;#bf0101;].ghost_secret]'
+                );
+        },
+
+        date: function() {
+            this.echo(new Date().toString());
+        },
+
+        socials: function() {
+            this.echo([
+                '[[;#fdd835;]Links:]',
+                '',
+                '  [[;#999999;]]]─ [[;#69f0ae;]https://www.gagaltotal666.my.id/]',
+                '  [[;#999999;]]]─ [[;#69f0ae;]https://gagaltotal.github.io/ghost666]',
+                '  [[;#999999;]]]─ [[;#69f0ae;]https://gtrtech666.my.id/portofolio-saya/]',
+            ].join('\n'));
+        },
+
+        mybini: function() {
+            this.echo('[[;#bf0101;]My Bini is empty.... BINI GUA KEMANA? IYA EMANG BINI GUA KAGA ADA HAHAHAHA]');
+        },
+
+    }, {
+        greetings: null,
+        name: 'ghost_terminal',
+        prompt: PROMPT,
+        completion: true,
+        checkArity: false,
+        exit: false,
+        clear: true,
+
+        onInit: function() {
+            this.echo(
+              isMobile() ? responsiveBanner() : BANNER_FULL,
+              {raw:true}
+            );
+            this.echo(isMobile() ? GHOST_MOBILE : GHOST_FULL);
+            this.echo('');
+            this.echo('[[;#999999;]Type [[;#00e5ff;]help] to see available commands.]');
+            this.echo('');
+        },
+
+        onCommandNotFound: function(cmd) {
+            this.echo(`[[;#bf0101;]bash: ${cmd}: command not found]`);
+        },
+    });
+
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            const t = document.querySelector('.terminal');
+            if (!t) return;
+            if (window.innerWidth <= 400) {
+                t.style.fontSize = '9px';
+            } else if (window.innerWidth <= 600) {
+                t.style.fontSize = '11px';
+            } else if (window.innerWidth <= 900) {
+                t.style.fontSize = '12px';
+            } else {
+                t.style.fontSize = '14px';
+            }
+
+            term.clear();
+            term.echo(
+              isMobile() ? responsiveBanner() : BANNER_FULL,
+              {raw:true}
+            );
+            term.echo(isMobile() ? GHOST_MOBILE : GHOST_FULL);
+            term.echo('');
+            term.echo('[[;#999999;]Type [[;#00e5ff;]help] to see available commands.]');
+            term.echo('');
+            term.refresh();
+        }, 150);
+    });
+    </script>
 </body>
+
 </html>
